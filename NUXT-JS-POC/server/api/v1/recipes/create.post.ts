@@ -1,30 +1,33 @@
 import createRecipe from "~/server/queries/createRecipe";
+import { PostgresDBClient } from "~/server/queries/db";
 import { Recipe } from "~/server/types/recipeType";
 
+
+const payload: Recipe = {
+  recipeSteps: [
+    {
+      step: 1,
+      recipeId: "Pasta",
+      stepDetails: "This is 1 recipe step details",
+      imageFile: null,
+    },
+  ],
+  name: "New Recipe",
+  description: "This is a new recipe",
+  recipeImage: null,
+  totalSteps: 4,
+  recipeCategory: "Breakfast",
+  ingredients: [
+    {
+      imageFile: null,
+      measurement: "Teaspoon",
+      name: "Olive Oil",
+      quantity: 4,
+    },
+  ],
+};
 export default defineEventHandler(async (event) => {
-  const payload: Recipe = {
-    recipeSteps: [
-      {
-        step: 1,
-        recipeId: "Pasta",
-        stepDetails: "This is 1 recipe step details",
-        imageFile: null,
-      },
-    ],
-    name: "New Recipe",
-    description: "This is a new recipe",
-    recipeImage: null,
-    totalSteps: 4,
-    recipeCategory: "Breakfast",
-    ingredients: [
-      {
-        imageFile: null,
-        measurement: "Teaspoon",
-        name: "Olive Oil",
-        quantity: 4,
-      },
-    ],
-  };
+
   try {
     const result = await createRecipe(payload);
     return {
@@ -39,6 +42,8 @@ export default defineEventHandler(async (event) => {
     return {
       status: "error",
       message: errMsg,
-    };
+    }
+  }finally{
+    PostgresDBClient.releaseClient()
   }
 });
