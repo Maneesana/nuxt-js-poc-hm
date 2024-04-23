@@ -48,5 +48,5 @@ interface RecipeCard {
 
 type RecipeForm =Omit<Recipe,"id"|"ingredients"|"steps"> & {ingredients:IngredientForm[],steps:RecipeStepForm[]}
 
-type RecipeFormProps= Omit<Recipe,"imageFile"> & { recipeImage: string };
+type RecipeFormProps= Omit<RecipeForm,"imageFile"> & { recipeImage: string };
 export type { Recipe, Ingredient, RecipeStep, RecipePageProps, RecipeCard,IngredientForm ,RecipeStepForm,RecipeForm,RecipeFormProps};
