@@ -1,5 +1,5 @@
 <template>
-  <CreateRecipeForm />
+  <RecipeForm />
 </template>
 
 <script setup lang="ts">

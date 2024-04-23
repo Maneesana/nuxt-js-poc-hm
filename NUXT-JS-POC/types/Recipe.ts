@@ -11,7 +11,7 @@ interface Recipe {
 
 interface Ingredient {
   id: string;
-  imageFile: File | null;
+  imageFile: File | null | string;
   measurement: string;
   name: string;
   quantity: number;
@@ -23,15 +23,16 @@ interface RecipeStep {
   step: number;
   stepDetails: string;
   recipeId: string;
-  imageFile: File | null;
+  imageFile: File | null | string;
 }
-
+type RecipeStepForm = Pick<RecipeStep, "step"|"stepDetails"|"imageFile">
 type RecipeStepProps = Omit<RecipeStep, "imageFile"> & {
   imageFile: string;
 };
 type IngredientProps = Omit<Ingredient, "imageFile"> & {
   imageFile: string;
 };
+type IngredientForm= Pick<Ingredient, "imageFile" | "measurement" |"name" | "quantity">;
 
 type RecipePageProps = Omit<Recipe, "recipeImage" | "ingredients" | "steps"> & {
   recipeImage: string;
@@ -44,4 +45,8 @@ interface RecipeCard {
   description: string;
   recipeCategory: string;
 }
-export type { Recipe, Ingredient, RecipeStep, RecipePageProps, RecipeCard };
+
+type RecipeForm =Omit<Recipe,"id"|"ingredients"|"steps"> & {ingredients:IngredientForm[],steps:RecipeStepForm[]}
+
+type RecipeFormProps= Omit<Recipe,"imageFile"> & { recipeImage: string };
+export type { Recipe, Ingredient, RecipeStep, RecipePageProps, RecipeCard,IngredientForm ,RecipeStepForm,RecipeForm,RecipeFormProps};

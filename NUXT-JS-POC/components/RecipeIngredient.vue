@@ -132,20 +132,22 @@
 </template>
 
 <script lang="ts" setup>
+import type {  IngredientForm } from '~/types/Recipe';
+
   const emit = defineEmits([
     "ingredient-form-data-submit",
     "cancel-ingredient-form",
   ]);
-  const ingredientForm = ref({
+
+  const ingredientForm = ref<IngredientForm>({
     imageFile: null,
     measurement: "",
     name: "",
     quantity: 0,
   });
 
-  function imageFileInputHandler(event) {
-    console.log(event.target.files[0]);
-    ingredientForm.value.imageFile = event.target.files[0];
+  function imageFileInputHandler(event:Event) {
+    ingredientForm.value.imageFile = (event.target as HTMLInputElement).files?.[0] as File;
   }
 
   function resetIngredientForm() {

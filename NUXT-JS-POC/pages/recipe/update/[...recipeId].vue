@@ -2,11 +2,13 @@
   <div>update recipe</div>
 
   <!-- <pre> {{ recipe }}</pre> -->
-  <CreateRecipeForm :formValues="recipe" />
+  <RecipeForm :formValues="(recipe as RecipeFormProps)" />
 </template>
 
 <script lang="ts" setup>
-  const recipeId = useRoute().params.recipeId;
+import type {  RecipeFormProps } from '~/types/Recipe';
+
+  const recipeId = useRoute().params.recipeId as string;
 
   const { getRecipeById } = useRecipeStore();
   const recipe = await getRecipeById(recipeId);

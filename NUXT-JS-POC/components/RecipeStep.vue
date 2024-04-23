@@ -95,23 +95,20 @@
   </div>
 </template>
 <script setup lang="ts">
-  interface RecipeStepForm {
-    step: number;
-    stepDetails: string;
-    imageFile: File | null;
-  }
+import type { RecipeStepForm } from '~/types/Recipe';
+
+
   const emit = defineEmits([
     "recipe-step-form-data-submit",
     "cancel-recipe-step-form",
   ]);
-  const form = ref({
+  const form = ref<RecipeStepForm>({
     step: 0,
     stepDetails: "",
     imageFile: null,
   });
-  function imageFileInputHandler(event) {
-    console.log("changing", event.target.files[0]);
-    form.value.imageFile = event.target.files[0];
+  function imageFileInputHandler(event:Event) {
+    form.value.imageFile = (event.target as HTMLInputElement).files?.[0] as File;
   }
 
   function resetRecipeStepForm() {
